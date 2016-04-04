@@ -1,6 +1,6 @@
 Template.InvoiceTable.helpers({
   invoices: function () {
-    return InvoiceTicketsCollection.find(filter, {
+    return InvoiceTicketsCollection.find(filter.get(), {
       sort: {
         createdAt: sortState.get('sortCreatedAt', true),
         total: sortState.get('sortTotal', true)
