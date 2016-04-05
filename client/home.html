@@ -1,7 +1,6 @@
 <template name="Home">
   <h1>Invoices</h1>
 
-  {{> DatabaseSetup}}
-  {{> FilterButtons}}
+  {{> FilterButtons timeFrame=timeFrame}}
   {{> InvoiceTable}}
 </template>
