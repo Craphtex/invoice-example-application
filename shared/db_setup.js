@@ -1,4 +1,12 @@
-Session.setDefault('invoiceNumber', 1); // Bad practice to use a contuious range from a security perspective
+Meteor.methods({
+  generateInvoices: function(title) {
+    InvoiceTicketsCollection.remove({});
+    createTicketsForFirstTwoMonths();
+    invoiceNumber = 0;
+  }
+});
+
+let invoiceNumber = 0;
 
 createTickets = function(startDate, days, numberOfTickets) {
   for (var i = 0; i < numberOfTickets; i++) {
@@ -9,9 +17,7 @@ createTickets = function(startDate, days, numberOfTickets) {
     createdAt.setSeconds(0);
     createdAt.setMilliseconds(0);
     var total = Math.floor(Math.random() * 20) * 10;
-    var invoiceNumber = Session.get('invoiceNumber');
-    Session.set('invoiceNumber', Session.get('invoiceNumber') + 1);
-    InvoiceTicketsCollection.insert({"invoiceNumber": invoiceNumber, "total": total, "createdAt": createdAt});
+    InvoiceTicketsCollection.insert({"invoiceNumber": invoiceNumber++, "total": total, "createdAt": createdAt});
   }
 }
 createTicketsForFirstWeek = function() {
@@ -25,11 +31,3 @@ createTicketsForFirstTwoMonths = function() {
   createTicketsForFirstMonth();
   createTickets(new Date(new Date() + 30), 31, 150); // Not exact but good enough
 }
-
-Template.DatabaseSetup.events({
-  'click #generate': function () {
-  	// Insert an empty ticket to the collection, and creates the collection if it doesn't exists.
-    //InvoiceTicketsCollection.insert({});
-    createTicketsForFirstTwoMonths();
-  }
-});
