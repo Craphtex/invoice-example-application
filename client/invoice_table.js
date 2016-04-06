@@ -22,8 +22,8 @@ Template.InvoiceTable.helpers({
   totalButtonText: function () {
     return sortState.get('sortTotal');
   },
-  moreResults: function() {
-    return !(InvoiceTicketsCollection.find({}).count() < limit.get());
+  dummy: function () {
+    return "Test";
   }
 });
 
@@ -33,25 +33,16 @@ Template.InvoiceTable.events({
   },
   "click #total": function (event) {
     sortState.toggle('sortTotal');
+  },
+  "becameVisible #showMoreResults": function (event) {
+    visible.set(!(InvoiceTicketsCollection.find(getFilter(date.get(), days.get()), {
+      sort: {
+        createdAt: sortState.get('sortCreatedAt', true),
+        total: sortState.get('sortTotal', true)
+      },
+      limit: limit.get()
+    }).count() < limit.get()));
   }
 });
 
-function showMoreVisible() {
-  var threshold, target = $("#showMoreResults");
-  if (!target.length) return;
-
-  threshold = $(window).scrollTop() + $(window).height() - target.height();
-
-  if (target.offset().top < threshold) {
-    if (!target.data("visible")) {
-      target.data("visible", true);
-      limit.set(limit.get() + 20);
-    }
-  } else {
-    if (target.data("visible")) {
-      target.data("visible", false);
-    }
-  }        
-}
-
-$(window).scroll(showMoreVisible);
+visible = new ReactiveVar(true);

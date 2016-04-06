@@ -11,9 +11,7 @@
     </tr>
     {{/each}}
   </table>
-  {{#if moreResults}}
-    <div id="showMoreResults">Loading...</div>
-  {{/if}}
+  {{> MoreResultsIndicator}}
 </template>
 
 <template name="InvoiceTicket">
