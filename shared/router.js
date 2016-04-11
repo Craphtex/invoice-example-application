@@ -2,7 +2,6 @@ goTo = function(timeFrame) {
   FlowRouter.go('/:timeFrame', {timeFrame: timeFrame}, FlowRouter.current().queryParams);
 }
 
-limit = new ReactiveVar({});
 date = new ReactiveVar({});
 days = new ReactiveVar(0);
 
@@ -48,7 +47,6 @@ FlowRouter.route('/:timeFrame', {
   action(params, queryParams) {
     date.set(getToday());
     days.set(timeFrames[params.timeFrame]);
-    limit.set(20);
     BlazeLayout.render('Home', params);
   }
 });

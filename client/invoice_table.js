@@ -1,8 +1,9 @@
 Template.InvoiceTable.onCreated(function () {
   var instance = this;
+  limit = new ReactiveVar(20);
 
   instance.autorun(function () {
-    Meteor.subscribe('invoices', date.get(), days.get(), limit.get());
+    instance.cursor = instance.subscribe('invoices', date.get(), days.get(), limit.get());
   });
 });
 
@@ -24,6 +25,15 @@ Template.InvoiceTable.helpers({
   },
   dummy: function () {
     return "Test";
+  },
+  hasMoreContent: function () {
+    return !(InvoiceTicketsCollection.find(getFilter(date.get(), days.get()), {
+      sort: {
+        createdAt: sortState.get('sortCreatedAt', true),
+        total: sortState.get('sortTotal', true)
+      },
+      limit: limit.get()
+    }).count() < limit.get());
   }
 });
 
@@ -34,15 +44,7 @@ Template.InvoiceTable.events({
   "click #total": function (event) {
     sortState.toggle('sortTotal');
   },
-  "becameVisible #showMoreResults": function (event) {
-    visible.set(!(InvoiceTicketsCollection.find(getFilter(date.get(), days.get()), {
-      sort: {
-        createdAt: sortState.get('sortCreatedAt', true),
-        total: sortState.get('sortTotal', true)
-      },
-      limit: limit.get()
-    }).count() < limit.get()));
+  "invoiceScrollEvent": function (event) {
+    limit.set(limit.get() + 20);
   }
 });
-
-visible = new ReactiveVar(true);
