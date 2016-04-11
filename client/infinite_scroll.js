@@ -1,9 +1,3 @@
-Template.InfiniteScroll.helpers({
-  hasMoreResults: () => {
-    return Template.currentData().moreContentAvailable;
-  }
-});
-
 Template.InfiniteScroll.onCreated(() => {
   showMoreVisible = (eventName) => {
     var target = this.$('.infiniteScroller');
