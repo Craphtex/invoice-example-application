@@ -29,9 +29,6 @@ Template.InvoiceTable.helpers({
   totalButtonText: function () {
     return sortState.get('sortTotal');
   },
-  dummy: function () {
-    return "Test";
-  },
   hasMoreContent: function () {
     return (ReactiveMethod.call('totalInvoiceCount', date.get(), days.get()) || 0) > limit.get();
   }
