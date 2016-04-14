@@ -1,8 +1,14 @@
 Template.InvoiceTable.onCreated(function () {
   var instance = this;
   limit = new ReactiveVar(20);
+  timeFrame = instance.data.timeFrame;
+
 
   instance.autorun(function () {
+    if (timeFrame != Template.currentData().timeFrame) {
+      timeFrame = Template.currentData().timeFrame;
+      limit = new ReactiveVar(20);
+    }
     instance.cursor = instance.subscribe('invoices', date.get(), days.get(), limit.get());
   });
 });
@@ -27,13 +33,7 @@ Template.InvoiceTable.helpers({
     return "Test";
   },
   hasMoreContent: function () {
-    return !(InvoiceTicketsCollection.find(getFilter(date.get(), days.get()), {
-      sort: {
-        createdAt: sortState.get('sortCreatedAt', true),
-        total: sortState.get('sortTotal', true)
-      },
-      limit: limit.get()
-    }).count() < limit.get());
+    return (ReactiveMethod.call('totalInvoiceCount', date.get(), days.get()) || 0) > limit.get();
   }
 });
 

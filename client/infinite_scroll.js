@@ -1,19 +1,12 @@
 Template.InfiniteScroll.onCreated(() => {
   showMoreVisible = (eventName) => {
-    var target = this.$('.infiniteScroller');
+    let target = this.$('.infiniteScroller');
     if (!target.length) return;
 
     let threshold = $(window).scrollTop() + $(window).height() - target.height();
 
     if (target.offset().top < threshold) {
-      if (!target.data("visible")) {
-        target.data("visible", true);
         target.trigger(eventName);
-      }
-    } else {
-      if (target.data("visible")) {
-        target.data("visible", false);
-      }
     }
   }
 });
