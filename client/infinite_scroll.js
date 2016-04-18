@@ -3,7 +3,7 @@ const DEFAULT_DEBOUNCE = 200;
 Template.InfiniteScroll.onCreated(() => {
   showMoreVisible = (eventName) => {
     let target = this.$('.infiniteScroller');
-    console.log(Template.currentData());
+    //console.log(Template.currentData());
     if (!target.length) return;
 
     let threshold = $(window).scrollTop() + $(window).height() - target.height();
