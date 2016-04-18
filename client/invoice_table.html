@@ -5,16 +5,18 @@
       <td>total<button id="total">{{totalButtonText}}</button></td>
       <td>createdAt<button id="createdAt">{{createdAtButtonText}}</button></td>
     </tr>
-    {{#each invoices}}
-    <tr>
-      {{> InvoiceTicket}}
-    </tr>
-    {{/each}}
+    {{#InfiniteScroll eventName="invoiceScrollEvent" moreContentAvailable=hasMoreContent}}
+      {{#each invoices}}
+        {{> InvoiceTicket}}
+      {{/each}}
+    {{/InfiniteScroll}}
   </table>
 </template>
 
 <template name="InvoiceTicket">
+<tr>
   <td>{{invoiceNumber}}</td>
   <td>{{total}}</td>
   <td>{{createdAt}}</td>
+</tr>
 </template>
