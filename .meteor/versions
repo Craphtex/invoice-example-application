@@ -85,6 +85,7 @@ routepolicy@1.0.9
 service-configuration@1.0.8
 session@1.1.4
 simple:reactive-method@1.0.2
+space:template-controller@0.2.0
 spacebars@1.0.10
 spacebars-compiler@1.0.10
 standard-minifier-css@1.0.5
