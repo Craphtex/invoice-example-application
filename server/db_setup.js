@@ -1,9 +1,8 @@
-Meteor.methods({
-  generateInvoices: function(title) {
-    InvoiceTicketsCollection.remove({});
-    createTicketsForFirstTwoMonths();
-    invoiceNumber = 0;
-  }
+Meteor.startup(function() {
+  // Generate new invoices on startup
+  InvoiceTicketsCollection.remove({});
+  createTicketsForFirstTwoMonths();
+  invoiceNumber = 0;
 });
 
 let invoiceNumber = 0;
