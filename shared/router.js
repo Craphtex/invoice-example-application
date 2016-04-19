@@ -47,7 +47,7 @@ FlowRouter.route('/:timeFrame', {
   action(params, queryParams) {
     date.set(getToday());
     days.set(timeFrames[params.timeFrame]);
-    BlazeLayout.render('Home', params);
+    BlazeLayout.render('home', params);
   }
 });
 

@@ -1,19 +1,19 @@
-<template name="InvoiceTable">
+<template name="invoice_table">
   <table>
     <tr>
       <td>Invoice Nr.</td>
       <td>total<button id="total">{{totalButtonText}}</button></td>
       <td>createdAt<button id="createdAt">{{createdAtButtonText}}</button></td>
     </tr>
-    {{#InfiniteScroll eventName="invoiceScrollEvent" moreContentAvailable=hasMoreContent}}
+    {{#infinite_scroll eventName="invoiceScrollEvent" moreContentAvailable=hasMoreContent}}
       {{#each invoices}}
-        {{> InvoiceTicket}}
+        {{> invoice_ticket}}
       {{/each}}
-    {{/InfiniteScroll}}
+    {{/infinite_scroll}}
   </table>
 </template>
 
-<template name="InvoiceTicket">
+<template name="invoice_ticket">
 <tr>
   <td>{{invoiceNumber}}</td>
   <td>{{total}}</td>
