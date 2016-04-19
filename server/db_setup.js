@@ -4,18 +4,16 @@ Meteor.startup(function() {
   createTicketsForFirstTwoMonths();
 });
 
-let invoiceNumber = 0;
-
 createTickets = function(startDate, days, numberOfTickets) {
-  for (var i = 0; i < numberOfTickets; i++) {
-    var createdAt = new Date(startDate);
+  for (let invoiceNumber = 1; invoiceNumber <= numberOfTickets; invoiceNumber++) {
+    let createdAt = new Date(startDate);
     createdAt.setDate(createdAt.getDate() - Math.floor(Math.random() * days));
     createdAt.setHours(0);
     createdAt.setMinutes(0);
     createdAt.setSeconds(0);
     createdAt.setMilliseconds(0);
-    var total = Math.floor(Math.random() * 20) * 10;
-    InvoiceTicketsCollection.insert({"invoiceNumber": invoiceNumber++, "total": total, "createdAt": createdAt});
+    let total = Math.floor(Math.random() * 20) * 10;
+    InvoiceTicketsCollection.insert({"invoiceNumber": invoiceNumber, "total": total, "createdAt": createdAt});
   }
 }
 createTicketsForFirstWeek = function() {
