@@ -1,4 +1,4 @@
-TemplateController('InvoiceTable', {
+TemplateController('invoice_table', {
   state: {
     limit: 20
   },

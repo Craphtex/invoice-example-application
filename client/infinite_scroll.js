@@ -1,6 +1,6 @@
 const DEFAULT_DEBOUNCE = 200;
 
-TemplateController('InfiniteScroll', {
+TemplateController('infinite_scroll', {
   onCreated() {
     showMoreVisible = (eventName) => {
       let target = this.$('.infiniteScroller');

@@ -1,4 +1,4 @@
-TemplateController('FilterButtons', {
+TemplateController('filter_buttons', {
   helpers: {
     _: function () {
       return _
