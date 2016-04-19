@@ -10,6 +10,7 @@ TemplateController('InfiniteScroll', {
 
       if (target.offset().top < threshold) {
         target.trigger(eventName);
+        //this.triggerEvent(eventName); // Won't work due to a bug in TemplateController package
       }
     }
   },
@@ -21,5 +22,4 @@ TemplateController('InfiniteScroll', {
   onDestroyed() {
     $(window).off('scroll', _.debounce(() => {showMoreVisible(this.data.eventName)}, Template.currentData().debounce || DEFAULT_DEBOUNCE));
   }
-
 });

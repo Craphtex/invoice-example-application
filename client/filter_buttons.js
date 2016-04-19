@@ -14,7 +14,7 @@ TemplateController('FilterButtons', {
   },
 
   events: {
-    'click .timeFrame': function (event) {
+    'click .timeFrame'(event) {
       goTo(event.currentTarget.id);
     }
   }
