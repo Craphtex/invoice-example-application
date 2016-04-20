@@ -1,6 +1,8 @@
-const DEFAULT_DEBOUNCE = 200;
-
 TemplateController('infinite_scroll', {
+  private : {
+    defaultDebounce: 200
+  },
+
   onCreated() {
     this.checkIndicatorVisibility = () => {
       let target = this.$('.infinite-scroller');
@@ -12,14 +14,19 @@ TemplateController('infinite_scroll', {
         target.trigger(this.data.eventName);
         //this.triggerEvent(eventName); // Won't work due to a bug in TemplateController package
       }
-    }
+    };
+    this.checkIndicatorVisibilityDebounced = () => {
+      return (event) => {
+        _.debounce(this.checkIndicatorVisibility(), this.data.debounce || this.defaultDebounce);
+      }
+    };
   },
 
   onRendered() {
-    $(window).on('scroll', _.debounce(this.checkIndicatorVisibility, Template.currentData().debounce || DEFAULT_DEBOUNCE));
+    $(window).on('scroll', this.checkIndicatorVisibilityDebounced());
   },
 
   onDestroyed() {
-    $(window).off('scroll', _.debounce(this.checkIndicatorVisibility, Template.currentData().debounce || DEFAULT_DEBOUNCE));
+    $(window).off('scroll', this.checkIndicatorVisibilityDebounced());
   }
 });
