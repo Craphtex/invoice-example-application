@@ -14,7 +14,7 @@ TemplateController('filter_buttons', {
   },
 
   events: {
-    'click .timeFrame'(event) {
+    'click .time-frame'(event) {
       goTo(event.currentTarget.id);
     }
   }
