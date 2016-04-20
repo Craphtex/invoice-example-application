@@ -5,3 +5,4 @@ Version 0.3.0 Time Filters
 Version 0.4.0 Table Sorting
 Version 0.5.0 Routing State
 Version 0.5.1 Fixes #13 #14 #15 #17 #18
+Version 0.6.0 Infinite scroll

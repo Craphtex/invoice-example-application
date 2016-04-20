@@ -1,11 +1,7 @@
-<template name="FilterButtons">
+<template name="filter_buttons">
   <p>
     {{#each button in buttons}}
-      {{#if _.isEqual button.id timeFrame}}
-        <button class="timeFrame" id="{{button.id}}" style="color: blue;">{{button.text}}</button>
-      {{else}}
-        <button class="timeFrame" id="{{button.id}}">{{button.text}}</button>
-      {{/if}}
+        <button class="time-frame" id="{{button.id}}" style="{{#if _.isEqual button.id timeFrame}}color: blue;{{/if}}">{{button.text}}</button>
     {{/each}}
   </p>
 </template>

@@ -2,7 +2,8 @@ goTo = function(timeFrame) {
   FlowRouter.go('/:timeFrame', {timeFrame: timeFrame}, FlowRouter.current().queryParams);
 }
 
-filter = new ReactiveVar({});
+date = new ReactiveVar({});
+days = new ReactiveVar(0);
 
 sortState = {
   get: function (queryParam, database) {
@@ -44,11 +45,9 @@ FlowRouter.route('/', {
 FlowRouter.route('/:timeFrame', {
   name: 'timeFrame',
   action(params, queryParams) {
-    let date = getToday();
-    let days = timeFrames[params.timeFrame];
-    filter.set(getFilter(date, days));
-    invoiceSubscription = Meteor.subscribe('invoices', date, days);
-    BlazeLayout.render('Home', params);
+    date.set(getToday());
+    days.set(timeFrames[params.timeFrame]);
+    BlazeLayout.render('home', params);
   }
 });
 
