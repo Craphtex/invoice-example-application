@@ -3,7 +3,7 @@ const DEFAULT_DEBOUNCE = 200;
 TemplateController('infinite_scroll', {
   onCreated() {
     this.checkIndicatorVisibility = () => {
-      let target = this.$('.infiniteScroller');
+      let target = this.$('.infinite-scroller');
       if (!target.length) return;
 
       let threshold = $(window).scrollTop() + $(window).height() - target.height();
