@@ -2,6 +2,7 @@
   <table>
     <tr>
       <td>Invoice Nr.</td>
+      <td>E-mail</td>
       <td>total<button id="total">{{totalButtonText}}</button></td>
       <td>createdAt<button id="createdAt">{{createdAtButtonText}}</button></td>
     </tr>
@@ -16,7 +17,8 @@
 <template name="invoice_ticket">
 <tr>
   <td>{{invoiceNumber}}</td>
+  <td>{{email}}</td>
   <td>{{total}}</td>
-  <td>{{createdAt}}</td>
+  <td>{{formatedDate createdAt}}</td>
 </tr>
 </template>

@@ -49,3 +49,11 @@ TemplateController('invoice_table', {
     });
   }
 });
+
+TemplateController('invoice_ticket', {
+  helpers: {
+    formatedDate(date) {
+      return date.toISOString().split('T')[0];
+    }
+  }
+});
