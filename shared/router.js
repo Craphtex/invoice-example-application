@@ -70,3 +70,26 @@ let getDateDayCeiling = function(date, offset=0) {
   d.setMilliseconds(0);
   return d;
 }
+
+mergeDBFilters = function(...filters) {
+  let merge = {
+    ['$and']: []
+  };
+  for (let filter of filters) {
+    if (Object.keys(filter).length > 0)
+      merge['$and'].push(filter);
+  }
+  return merge;
+}
+
+getSearchFilter = function(searchTerms) {
+  let filter = {
+    ['$and']: []
+  };
+  for (let searchTerm in searchTerms) {
+    filter['$and'].push({
+      [searchTerm]: new RegExp('^' + searchTerms[searchTerm], 'i')
+    });
+  }
+  return filter;
+}
