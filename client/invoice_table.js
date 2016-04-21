@@ -33,6 +33,9 @@ TemplateController('invoice_table', {
     },
     'invoiceScrollEvent'(event) {
       this.state.limit(this.state.limit() + 20);
+    },
+    'enteredSearchQuery'(event, instance, data) {
+      console.log("Table", data);
     }
   },
 
@@ -47,7 +50,7 @@ TemplateController('invoice_table', {
       }
       instance.cursor = instance.subscribe('invoices', date.get(), days.get(), instance.state.limit());
     });
-  }
+  },
 });
 
 TemplateController('invoice_ticket', {

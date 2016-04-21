@@ -6,6 +6,14 @@
       <td>total<button id="total">{{totalButtonText}}</button></td>
       <td>createdAt<button id="createdAt">{{createdAtButtonText}}</button></td>
     </tr>
+    {{#filter_boxes eventName="enteredSearchQuery"}}
+    <tr>
+      <td>{{> filter_box field="invoiceNr"}}</td>
+      <td>{{> filter_box field="email"}}</td>
+      <td>{{> filter_box field="total"}}</td>
+      <td>{{> filter_box field="createdAt"}}</td>
+    </tr>
+    {{/filter_boxes}}
     {{#infinite_scroll eventName="invoiceScrollEvent" moreContentAvailable=hasMoreContent}}
       {{#each invoices}}
         {{> invoice_ticket}}
