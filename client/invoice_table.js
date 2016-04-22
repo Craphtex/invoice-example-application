@@ -60,6 +60,16 @@ TemplateController('invoice_table', {
         timeFrame = Template.currentData().timeFrame;
         instance.state.limit(20);
       }
+      let search = {};
+      let tmp = StateMachine.get('invoiceNumber', false);
+      if (tmp) search['invoiceNumber'] = { type: 'Number', filter: tmp };
+      tmp = StateMachine.get('email', false);
+      if (tmp) search['email'] = { type: 'String', filter: tmp };
+      tmp = StateMachine.get('total', false);
+      if (tmp) search['total'] = { type: 'Number', filter: tmp };
+      tmp = StateMachine.get('createdAt', false);
+      if (tmp) search['createdAt'] = { type: 'Date', filter: tmp };
+      Template.instance().state.searchTerms(search);
       instance.cursor = instance.subscribe('invoices', date.get(), days.get(), Template.instance().state.searchTerms(), instance.state.limit());
     });
   },
