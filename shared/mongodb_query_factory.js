@@ -32,7 +32,7 @@ MongoDBQueryFactory = class MongoDBQueryFactory {
   static createQueryByType(type, filter) {
     switch (type) {
       case 'String':
-        return new RegExp('^' + filter, 'i');
+        return new RegExp('^' + filter.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"), 'i');
       case 'Number':
         return parseInt(filter);
       default:
