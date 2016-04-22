@@ -12,6 +12,7 @@ TemplateController('filter_boxes', {
       }
       else
         delete this.state.filter()[data.field];
+      console.log("Filter", this.state.filter());
       this.$('.event-holder').trigger(this.data.eventName, [{filter: this.state.filter()}]);
     }
   }

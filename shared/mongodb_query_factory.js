@@ -33,6 +33,8 @@ MongoDBQueryFactory = class MongoDBQueryFactory {
     switch (type) {
       case 'String':
         return new RegExp('^' + filter, 'i');
+      case 'Number':
+        return parseInt(filter);
       default:
         console.log("Type", type, "is not supported.");
     }
