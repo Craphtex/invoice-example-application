@@ -15,7 +15,7 @@ MongoDBQueryFactory = class MongoDBQueryFactory {
       return {};
     if (Object.keys(searchTerms).length == 1)
       return {
-        [Object.keys(searchTerms)[0]]: new RegExp('^' + searchTerms[Object.keys(searchTerms)[0]], 'i')
+        [Object.keys(searchTerms)[0]]: MongoDBQueryFactory.createQueryByType(searchTerms[Object.keys(searchTerms)[0]].type, searchTerms[Object.keys(searchTerms)[0]].filter)
       };
 
     let filter = {
@@ -23,10 +23,19 @@ MongoDBQueryFactory = class MongoDBQueryFactory {
     };
     for (let searchTerm in searchTerms) {
       filter['$and'].push({
-        [searchTerm]: new RegExp('^' + searchTerms[searchTerm], 'i')
+        [searchTerm]: MongoDBQueryFactory.createQueryByType(searchTerms[searchTerm].type, searchTerms[searchTerm].filter)
       });
     }
     return filter;
+  }
+
+  static createQueryByType(type, filter) {
+    switch (type) {
+      case 'String':
+        return new RegExp('^' + filter, 'i');
+      default:
+        console.log("Type", type, "is not supported.");
+    }
   }
 
   static createTimeFilter(date, days) {

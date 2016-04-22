@@ -8,10 +8,10 @@
     </tr>
     {{#filter_boxes eventName="enteredSearchQuery"}}
     <tr>
-      <td>{{> filter_box field="invoiceNr"}}</td>
-      <td>{{> filter_box field="email"}}</td>
-      <td>{{> filter_box field="total"}}</td>
-      <td>{{> filter_box field="createdAt"}}</td>
+      <td>{{> filter_box field="invoiceNr" type="Number"}}</td>
+      <td>{{> filter_box field="email" type="String"}}</td>
+      <td>{{> filter_box field="total" type="Number"}}</td>
+      <td>{{> filter_box field="createdAt" type="Date"}}</td>
     </tr>
     {{/filter_boxes}}
     {{#infinite_scroll eventName="invoiceScrollEvent" moreContentAvailable=hasMoreContent}}
