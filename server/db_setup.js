@@ -1,11 +1,11 @@
 Meteor.startup(function() {
   // Generate new invoices on startup
   InvoiceTicketsCollection.remove({});
-  createTicketsForFirstTwoMonths();
+  createTicketsForFirstTwoMonths(0);
 });
 
-createTickets = function(startDate, days, numberOfTickets) {
-  for (let invoiceNumber = 1; invoiceNumber <= numberOfTickets; invoiceNumber++) {
+createTickets = function(startDate, days, numberOfTickets, startId) {
+  for (let invoiceNumber = startId + 1; invoiceNumber <= startId + numberOfTickets; invoiceNumber++) {
     let createdAt = new Date(startDate);
     createdAt.setDate(createdAt.getDate() - Math.floor(Math.random() * days));
     createdAt.setHours(0);
@@ -19,14 +19,14 @@ createTickets = function(startDate, days, numberOfTickets) {
     InvoiceTicketsCollection.insert({'invoiceNumber': invoiceNumber, 'email': email, 'total': total, 'createdAt': createdAt});
   }
 }
-createTicketsForFirstWeek = function() {
-  createTickets(new Date(), 7, 50);
+createTicketsForFirstWeek = function(startId) {
+  createTickets(new Date(), 7, 50, startId);
 }
-createTicketsForFirstMonth = function() {
-  createTicketsForFirstWeek();
-  createTickets(new Date(new Date() + 7), 23, 150); // Not exact but good enough
+createTicketsForFirstMonth = function(startId) {
+  createTicketsForFirstWeek(startId + 150);
+  createTickets(new Date(new Date() + 7), 23, 150, startId); // Not exact but good enough
 }
-createTicketsForFirstTwoMonths = function() {
-  createTicketsForFirstMonth();
-  createTickets(new Date(new Date() + 30), 31, 150); // Not exact but good enough
+createTicketsForFirstTwoMonths = function(startId) {
+  createTicketsForFirstMonth(startId + 150);
+  createTickets(new Date(new Date() + 30), 31, 150, startId); // Not exact but good enough
 }
