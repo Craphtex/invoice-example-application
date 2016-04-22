@@ -9,17 +9,17 @@ TemplateController('invoice_table', {
       let filter = MongoDBQueryFactory.mergeDBFilters(MongoDBQueryFactory.createTimeFilter(date.get(), days.get()),MongoDBQueryFactory.createSearchFilter(Template.instance().state.searchTerms()));
       return InvoiceTicketsCollection.find(filter, {
         sort: {
-          createdAt: sortState.get('sortCreatedAt', true),
-          total: sortState.get('sortTotal', true)
+          createdAt: Template.instance().sortingToDBSorting[StateMachine.get('sortCreatedAt', 'Asc')],
+          total: Template.instance().sortingToDBSorting[StateMachine.get('sortTotal', 'Asc')]
         },
         limit: Template.instance().state.limit()
       });
     },
     createdAtButtonText() {
-      return sortState.get('sortCreatedAt');
+      return StateMachine.get('sortCreatedAt', 'Asc');
     },
     totalButtonText() {
-      return sortState.get('sortTotal');
+      return StateMachine.get('sortTotal', 'Asc');
     },
     hasMoreContent() {
       return (ReactiveMethod.call('totalInvoiceCount', date.get(), days.get(), Template.instance().state.searchTerms()) || 0) > this.state.limit();
@@ -28,15 +28,21 @@ TemplateController('invoice_table', {
 
   events: {
     'click #createdAt'(event) {
-      sortState.toggle('sortCreatedAt');
+      //sortState.toggle('sortCreatedAt');
+      StateMachine.toggle('sortCreatedAt', ['Desc', 'Asc'])
     },
     'click #total'(event) {
-      sortState.toggle('sortTotal');
+      //sortState.toggle('sortTotal');
+      StateMachine.toggle('sortTotal', ['Desc', 'Asc'])
     },
     'invoiceScrollEvent'(event) {
       this.state.limit(this.state.limit() + 20);
     },
     'enteredSearchQuery'(event, instance, data) {
+      StateMachine.set('invoiceNumber', (data.filter.invoiceNumber) ? data.filter.invoiceNumber.filter : null);
+      StateMachine.set('email', (data.filter.email) ? data.filter.email.filter : null);
+      StateMachine.set('total', (data.filter.total) ? data.filter.total.filter : null);
+      StateMachine.set('createdAt', (data.filter.createdAt) ? data.filter.createdAt.filter : null);
       this.state.searchTerms(data.filter);
     }
   },
@@ -44,6 +50,10 @@ TemplateController('invoice_table', {
   onCreated() {
     let instance = this;
     let timeFrame = instance.data.timeFrame;
+    instance.sortingToDBSorting = {
+      'Desc': 1,
+      'Asc': -1,
+    };
 
     instance.autorun(function () {
       if (timeFrame != Template.currentData().timeFrame) {

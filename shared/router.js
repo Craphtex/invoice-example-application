@@ -5,21 +5,21 @@ goTo = function(timeFrame) {
 date = new ReactiveVar({});
 days = new ReactiveVar(0);
 
-sortState = {
-  get: function (queryParam, database) {
-    if (database === true) {
-      return (FlowRouter.getQueryParam(queryParam) || 'Asc') == 'Asc' ? 1 : -1;
-    }
-    else {
-      return (FlowRouter.getQueryParam(queryParam) || 'Asc') == 'Asc' ? 'Desc' : 'Asc';
-    }
-  },
-  toggle: function (queryParam) {
-    let direction = {};
-    direction[queryParam] = (FlowRouter.getQueryParam(queryParam) || 'Asc') == 'Asc' ? 'Desc' : 'Asc';
-    FlowRouter.setQueryParams(direction);
+StateMachine = class StateMachine {
+  static get(key, defaultValue) {
+    return FlowRouter.getQueryParam(key) || defaultValue;
   }
-};
+
+  static set(key, value) {
+    value = (value) ? (value || null) : null;
+    FlowRouter.setQueryParams({[key]: value});
+  }
+
+  static toggle(key, values) {
+    let index = (values.indexOf(FlowRouter.getQueryParam(key)) + 1) % values.length;
+    FlowRouter.setQueryParams({[key]: values[index]});
+  }
+}
 
 let timeFrames = {};
 timeFrames['today'] = 1;
