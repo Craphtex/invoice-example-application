@@ -5,21 +5,21 @@ goTo = function(timeFrame) {
 date = new ReactiveVar({});
 days = new ReactiveVar(0);
 
-sortState = {
-  get: function (queryParam, database) {
-    if (database === true) {
-      return (FlowRouter.getQueryParam(queryParam) || 'Asc') == 'Asc' ? 1 : -1;
-    }
-    else {
-      return (FlowRouter.getQueryParam(queryParam) || 'Asc') == 'Asc' ? 'Desc' : 'Asc';
-    }
-  },
-  toggle: function (queryParam) {
-    let direction = {};
-    direction[queryParam] = (FlowRouter.getQueryParam(queryParam) || 'Asc') == 'Asc' ? 'Desc' : 'Asc';
-    FlowRouter.setQueryParams(direction);
+StateMachine = class StateMachine {
+  static get(key, defaultValue) {
+    return FlowRouter.getQueryParam(key) || defaultValue;
   }
-};
+
+  static set(key, value) {
+    value = (value) ? (value || null) : null;
+    FlowRouter.setQueryParams({[key]: value});
+  }
+
+  static toggle(key, values) {
+    let index = (values.indexOf(FlowRouter.getQueryParam(key)) + 1) % values.length;
+    FlowRouter.setQueryParams({[key]: values[index]});
+  }
+}
 
 let timeFrames = {};
 timeFrames['today'] = 1;
@@ -50,23 +50,3 @@ FlowRouter.route('/:timeFrame', {
     BlazeLayout.render('home', params);
   }
 });
-
-getFilter = function(date, days) {
-  let filter = {
-      createdAt: {
-        $lt: getDateDayCeiling(date)
-      }
-  }
-  if (days > 0) filter.createdAt['$gte'] = getDateDayCeiling(date, days);
-  return filter;
-};
-
-let getDateDayCeiling = function(date, offset=0) {
-  var d = new Date(date);
-  d.setDate(d.getDate() + 1 - offset);
-  d.setHours(0);
-  d.setMinutes(0);
-  d.setSeconds(0);
-  d.setMilliseconds(0);
-  return d;
-}

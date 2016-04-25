@@ -1,10 +1,27 @@
 <template name="invoice_table">
   <table>
+    {{#filter_boxes eventName="enteredSearchQuery"}}
     <tr>
-      <td>Invoice Nr.</td>
-      <td>total<button id="total">{{totalButtonText}}</button></td>
-      <td>createdAt<button id="createdAt">{{createdAtButtonText}}</button></td>
+      <td>
+        Invoice Nr.<br>
+        {{> filter_box field="invoiceNumber" type="Number"}}
+      </td>
+      <td>
+        E-mail<br>
+        {{> filter_box field="email" type="String"}}
+      </td>
+      <td>
+        total
+        <button id="total">{{totalButtonText}}</button><br>
+        {{> filter_box field="total" type="Number"}}
+      </td>
+      <td>
+        createdAt
+        <button id="createdAt">{{createdAtButtonText}}</button><br>
+        <!--{{> filter_box field="createdAt" type="Date"}}-->
+      </td>
     </tr>
+    {{/filter_boxes}}
     {{#infinite_scroll eventName="invoiceScrollEvent" moreContentAvailable=hasMoreContent}}
       {{#each invoices}}
         {{> invoice_ticket}}
@@ -16,7 +33,8 @@
 <template name="invoice_ticket">
 <tr>
   <td>{{invoiceNumber}}</td>
+  <td>{{email}}</td>
   <td>{{total}}</td>
-  <td>{{createdAt}}</td>
+  <td>{{formatedDate createdAt}}</td>
 </tr>
 </template>

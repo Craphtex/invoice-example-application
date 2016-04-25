@@ -1,10 +1,12 @@
-Meteor.publish('invoices', function(date, days, limit) {
+Meteor.publish('invoices', function(date, days, searchTerms, limit) {
   if ((limit || 0) < 1) limit = 10;
-  return InvoiceTicketsCollection.find(getFilter(date, days), {limit: limit});
+  let filter = MongoDBQueryFactory.mergeDBFilters(MongoDBQueryFactory.createTimeFilter(date, days),MongoDBQueryFactory.createSearchFilter(searchTerms));
+  return InvoiceTicketsCollection.find(filter, {limit: limit});
 });
 
 Meteor.methods({
-  totalInvoiceCount: function(date, days) {
-    return InvoiceTicketsCollection.find(getFilter(date, days)).count();
+  totalInvoiceCount: function(date, days, searchTerms) {
+    let filter = MongoDBQueryFactory.mergeDBFilters(MongoDBQueryFactory.createTimeFilter(date, days),MongoDBQueryFactory.createSearchFilter(searchTerms));
+    return InvoiceTicketsCollection.find(filter).count();
   }
 });
